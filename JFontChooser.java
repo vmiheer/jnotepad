@@ -46,7 +46,7 @@ public class JFontChooser extends JDialog
 		pre.addActionListener(hfc);
 		app=new JButton("Apply");
 		app.addActionListener(hfc);
-		txtxt=new JTextArea("NUTAN");
+		txtxt=new JTextArea("ANGEL");
 		txtxt.setEditable(false);
 		p1.add(fnt);
 		p1.add(fsz);

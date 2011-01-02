@@ -3,8 +3,11 @@ Just Notepad atleast now. Like in windows (which does nothing except text editin
 You are welcome to add advanced feachers.
 
 Working componets
-New
-Color
-Find
+File
+	New	Open	Save	Close
+Edit
+	Cut	Copy	Paste	Find(incomplete searches 1st element)
+Format
+	Font	Color
 
 :-P
