@@ -1,0 +1,373 @@
+From 401e16402091c9c0d003e9844cc65799ffb10088 Mon Sep 17 00:00:00 2001
+From: miheer vaidya <v.miheer@gmail.com>
+Date: Sun, 26 Dec 2010 09:37:53 +0530
+Subject: [PATCH] added source
+
+---
+ HMyMenu.java  |  148 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ HNotepad.java |   13 +++++
+ MyMenu.java   |  112 +++++++++++++++++++++++++++++++++++++++++++
+ Notepad.java  |   36 ++++++++++++++
+ npp.java      |    9 ++++
+ 5 files changed, 318 insertions(+), 0 deletions(-)
+ create mode 100644 HMyMenu.java
+ create mode 100644 HNotepad.java
+ create mode 100644 MyMenu.java
+ create mode 100644 Notepad.java
+ create mode 100644 README
+ create mode 100644 npp.java
+
+diff --git a/HMyMenu.java b/HMyMenu.java
+new file mode 100644
+index 0000000..f5ce93a
+--- /dev/null
++++ b/HMyMenu.java
+@@ -0,0 +1,148 @@
++import java.awt.Color;
++import java.awt.event.ActionEvent;
++import java.awt.event.ActionListener;
++import java.util.regex.Matcher;
++import java.util.regex.Pattern;
++
++import javax.swing.JColorChooser;
++import javax.swing.JFileChooser;
++import javax.swing.JOptionPane;
++import javax.swing.JTextArea;
++
++
++public class HMyMenu implements ActionListener
++{
++	
++	MyMenu o;
++	JTextArea d;
++	JFileChooser jf;
++	HMyMenu(MyMenu m,JTextArea s)
++	{
++		o=m;
++		d=s;
++		jf=new JFileChooser();
++	}
++	public void actionPerformed(ActionEvent e) {
++		// TODO Auto-generated method stub	
++		if(e.getSource()==o.f_mi[o.FILE_NEW])
++		{
++			System.out.println("new");
++			if((!Notepad.s) && (!d.getText().equals("")))
++			{
++				int i=JOptionPane.showConfirmDialog(null, "do you want to save changes", "Warninig!\nnpp++", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
++				if(i==JOptionPane.CANCEL_OPTION)
++				{
++					return;
++				}
++				else if(i==JOptionPane.YES_OPTION)
++				{
++					save();
++				}
++				else
++				{
++					d.setText("");
++				}
++			}
++		}
++		else if(e.getSource()==o.f_mi[o.FILE_OPEN])
++		{
++			open();
++		}
++		else if(e.getSource()==o.f_mi[o.FILE_SAVE])
++		{
++			save();
++		}
++		else if(e.getSource()==o.f_mi[o.FILE_EXIT])
++		{
++			System.exit(0);
++		}
++		else if(e.getSource()==o.e_mi[o.EDIT_CUT])
++		{
++			//cut code
++		}
++		else if(e.getSource()==o.e_mi[o.EDIT_COPY])
++		{
++			//copy code
++		}
++		else if(e.getSource()==o.e_mi[o.EDIT_PASTE])
++		{
++			//paste code
++		}
++		else if(e.getSource()==o.e_mi[o.EDIT_FIND])
++		{
++			//find();
++			String s= JOptionPane.showInputDialog(null, "enter string to find");
++			int c=d.getText().indexOf(s);
++			d.setCaretPosition(c);
++			d.setSelectionStart(c);
++			d.setSelectionEnd(c+s.length());
++			d.setSelectionColor(Color.orange);
++		}
++		else if(e.getSource()==o.for_cl[o.FORMAT_COLOR_RED])
++		{
++			d.setForeground(Color.red);
++		}
++		else if(e.getSource()==o.for_cl[o.FORMAT_COLOR_GREEN])
++		{
++			d.setForeground(Color.green);
++		}
++		else if(e.getSource()==o.for_cl[o.FORMAT_COLOR_BLUE])
++		{
++			d.setForeground(Color.blue);
++		}
++		else if(e.getSource()==o.for_cl[o.FORMAT_COLOR_CHOOSE])
++		{
++			Color c=new Color(255,255,255);
++			c=JColorChooser.showDialog(null, "choose color u like", c);
++			if(c==null)
++				return;
++			else
++				d.setForeground(c);
++		}
++	}
++	private void save()
++	{
++		if(!Notepad.s && Notepad.sf)
++		{
++			System.out.println("f_save");
++				if (!Notepad.sf)
++				{
++					jf.showSaveDialog(null);
++					//write code to select file
++				}
++				//save contents to either this file or specified new file
++				//write code to write data to file here...
++		}
++	}
++	private void open()
++	{
++		System.out.println("f_open");
++		jf.showOpenDialog(o);
++	}
++	private void find()
++	{
++		//doesn't work now
++		String s;
++		try
++		{
++			s=JOptionPane.showInputDialog(null, "enter string regex is allowed");
++		Pattern p=Pattern.compile(s);
++		StringBuffer b= new StringBuffer(d.getText());
++		Matcher m=p.matcher(b);
++		if(m.matches())
++		{
++			d.setSelectionStart(m.start());
++			System.out.println(""+m.start());
++			d.setSelectionEnd(m.end());
++			System.out.println(""+m.start());
++			d.setSelectionColor(Color.orange);
++		}
++		}
++		catch(NullPointerException e)
++		{
++			return;
++		}
++
++	}
++	
++}
+diff --git a/HNotepad.java b/HNotepad.java
+new file mode 100644
+index 0000000..5cdebec
+--- /dev/null
++++ b/HNotepad.java
+@@ -0,0 +1,13 @@
++import java.awt.event.WindowAdapter;
++import java.awt.event.WindowEvent;
++
++public class HNotepad extends WindowAdapter
++{
++	@Override
++	public void windowClosing(WindowEvent e) {
++		// TODO Auto-generated method stub
++		super.windowClosing(e);
++		System.out.println("exiting...");
++		System.exit(0);
++	}
++}
+diff --git a/MyMenu.java b/MyMenu.java
+new file mode 100644
+index 0000000..47acca0
+--- /dev/null
++++ b/MyMenu.java
+@@ -0,0 +1,112 @@
++import javax.swing.*;
++
++public class MyMenu extends JMenuBar 
++{
++	public JMenuBar m;						//menubar
++	public JMenu me[];						//menuelement
++	
++	public JMenuItem f_mi[];				//file menu items
++	public JMenuItem e_mi[];				//edit menu items
++	public JMenu for_m[];					//format menu items
++	
++	public JMenuItem for_cl[];				//format color
++	public JMenuItem for_fo[];				//format fonts
++	
++	public final int FORMAT_COLOR=0;
++	public final int FORMAT_FONT=1;
++	
++	public final int FORMAT_COLOR_RED=0;
++	public final int FORMAT_COLOR_GREEN=1;
++	public final int FORMAT_COLOR_BLUE=2;
++	public final int FORMAT_COLOR_CHOOSE=3;
++	
++	public final int FILE_NEW=0;
++	public final int FILE_OPEN=1;
++	public final int FILE_SAVE=2;
++	public final int FILE_SAVE_AS=3;
++	public final int FILE_PRINT=4;
++	public final int FILE_EXIT=5;
++	
++	public final int EDIT_CUT=0;
++	public final int EDIT_COPY=1;
++	public final int EDIT_PASTE=2;
++	public final int EDIT_FIND=3;
++	public final int EDIT_FORMAT=4;
++	
++	public final int Menu_FILE=0;
++	public final int Menu_EDIT=1;
++	public final int Menu_FORMAT=2;
++	public MyMenu(JTextArea t)
++	{
++		super();									//menubar initialised
++		HMyMenu hmm=new HMyMenu(this,t);			//handles menubar events sending this and text area
++		me = new JMenu[Menu_FORMAT+1];							//menubar has 3 elements 
++		
++		me[Menu_FILE]=new JMenu("File");			//0th is file
++			add(me[Menu_FILE]);						//adding to menubar 
++			me[Menu_EDIT]=new JMenu("Edit");		//1th is edit
++			add(me[Menu_EDIT]);						
++			me[Menu_FORMAT]=new JMenu("Format");	//2nd is format
++			add(me[Menu_FORMAT]);
++		
++		f_mi =new JMenuItem[FILE_EXIT +1];					
++			f_mi[FILE_NEW]=new JMenuItem("new");
++			me[Menu_FILE].add(f_mi[FILE_NEW]);
++			f_mi[FILE_OPEN]=new JMenuItem("open...");
++			me[Menu_FILE].add(f_mi[FILE_OPEN]);
++			f_mi[FILE_SAVE]=new JMenuItem("save...");
++			me[Menu_FILE].add(f_mi[FILE_SAVE]);
++			f_mi[FILE_SAVE_AS]=new JMenuItem("save as...");
++			me[Menu_FILE].add(f_mi[FILE_SAVE_AS]);
++			f_mi[FILE_PRINT]=new JMenuItem("print");
++			me[Menu_FILE].add(f_mi[FILE_PRINT]);
++			f_mi[FILE_EXIT]=new JMenuItem("Exit");
++			me[Menu_FILE].add(f_mi[FILE_EXIT]);	
++			
++		
++		
++		e_mi =new JMenuItem[EDIT_FIND+1];
++			e_mi[EDIT_CUT]=new JMenuItem("Cut");
++			me[Menu_EDIT].add(e_mi[EDIT_CUT]);
++			e_mi[EDIT_COPY]=new JMenuItem("Copy");
++			me[Menu_EDIT].add(e_mi[EDIT_COPY]);
++			e_mi[EDIT_PASTE]=new JMenuItem("Paste");
++			me[Menu_EDIT].add(e_mi[EDIT_PASTE]);
++			e_mi[EDIT_FIND]=new JMenuItem("Find");
++			me[Menu_EDIT].add(e_mi[EDIT_FIND]);
++			
++		for_m=new JMenu[FORMAT_FONT+1];
++			for_m[FORMAT_COLOR]=new JMenu("color");
++			me[Menu_FORMAT].add(for_m[FORMAT_COLOR]);
++			for_m[FORMAT_FONT]=new JMenu("font");
++			me[Menu_FORMAT].add(for_m[FORMAT_FONT]);
++			
++			for_cl=new JMenuItem[FORMAT_COLOR_CHOOSE+1];
++				for_cl[FORMAT_COLOR_RED]=new JMenuItem("Red");
++				for_m[FORMAT_COLOR].add(for_cl[FORMAT_COLOR_RED]);
++				for_cl[FORMAT_COLOR_GREEN]=new JMenuItem("Green");
++				for_m[FORMAT_COLOR].add(for_cl[FORMAT_COLOR_GREEN]);
++				for_cl[FORMAT_COLOR_BLUE]=new JMenuItem("Blue");
++				for_m[FORMAT_COLOR].add(for_cl[FORMAT_COLOR_BLUE]);
++				for_cl[FORMAT_COLOR_CHOOSE]=new JMenuItem("Choose...");
++				for_m[FORMAT_COLOR].add(for_cl[FORMAT_COLOR_CHOOSE]);
++			
++		
++		for(int i=0;i<me.length;i++)
++		{
++			me[i].addActionListener(hmm);
++		}
++		for(int i=0;i<f_mi.length;i++)
++		{
++			f_mi[i].addActionListener(hmm);
++		}
++		for(int i=0;i<e_mi.length;i++)
++		{
++			e_mi[i].addActionListener(hmm);
++		}
++		for(int i=0;i<for_cl.length;i++)
++		{
++			for_cl[i].addActionListener(hmm);
++		}
++	}
++}
+diff --git a/Notepad.java b/Notepad.java
+new file mode 100644
+index 0000000..49e4c48
+--- /dev/null
++++ b/Notepad.java
+@@ -0,0 +1,36 @@
++import javax.swing.*;
++public class Notepad extends JFrame 
++{
++	static public boolean s;
++	static public boolean sf;
++	public txtData d;
++	MyMenu m;
++	class txtData extends JTextArea
++	{
++		txtData()
++		{
++			super();
++		}
++	}
++	Notepad()
++	{
++		super("Jnotepad++");
++		setSize(400, 400);
++		d= new txtData();
++		m=new MyMenu(d);
++		HNotepad hn= new HNotepad();
++		addWindowListener(hn);
++		setJMenuBar(m);
++		add(d);
++		setVisible(true);
++	}
++	public JTextArea getTxtField()
++	{
++		return d;
++	}
++	static
++	{
++		s=true;
++		sf=false;
++	}
++}
+diff --git a/README b/README
+new file mode 100644
+index 0000000..e69de29
+diff --git a/npp.java b/npp.java
+new file mode 100644
+index 0000000..0fb3c69
+--- /dev/null
++++ b/npp.java
+@@ -0,0 +1,9 @@
++
++class npp {
++	public static void main(String args[])
++	{
++		System.out.println("hello world");
++		new Notepad();
++	}
++
++}
+-- 
+1.7.0.4
+

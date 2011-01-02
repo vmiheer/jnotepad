@@ -2,6 +2,7 @@ import javax.swing.*;
 
 public class MyMenu extends JMenuBar 
 {
+	public Notepad np;
 	public JMenuBar m;						//menubar
 	public JMenu me[];						//menuelement
 	
@@ -12,6 +13,7 @@ public class MyMenu extends JMenuBar
 	public JMenuItem for_cl[];				//format color
 	public JMenuItem for_fo[];				//format fonts
 	
+	public final int FORMAT_FONT_CHOOSE=0;
 	public final int FORMAT_COLOR=0;
 	public final int FORMAT_FONT=1;
 	
@@ -36,10 +38,12 @@ public class MyMenu extends JMenuBar
 	public final int Menu_FILE=0;
 	public final int Menu_EDIT=1;
 	public final int Menu_FORMAT=2;
-	public MyMenu(JTextArea t)
+	HMyMenu hmm;
+	public MyMenu(JTextArea t,Notepad pd)
 	{
 		super();									//menubar initialised
-		HMyMenu hmm=new HMyMenu(this,t);			//handles menubar events sending this and text area
+		np=pd;
+		hmm=new HMyMenu(t,np,this);			//handles menubar events sending this and text area
 		me = new JMenu[Menu_FORMAT+1];							//menubar has 3 elements 
 		
 		me[Menu_FILE]=new JMenu("File");			//0th is file
@@ -81,6 +85,7 @@ public class MyMenu extends JMenuBar
 			for_m[FORMAT_FONT]=new JMenu("font");
 			me[Menu_FORMAT].add(for_m[FORMAT_FONT]);
 			
+			
 			for_cl=new JMenuItem[FORMAT_COLOR_CHOOSE+1];
 				for_cl[FORMAT_COLOR_RED]=new JMenuItem("Red");
 				for_m[FORMAT_COLOR].add(for_cl[FORMAT_COLOR_RED]);
@@ -90,8 +95,10 @@ public class MyMenu extends JMenuBar
 				for_m[FORMAT_COLOR].add(for_cl[FORMAT_COLOR_BLUE]);
 				for_cl[FORMAT_COLOR_CHOOSE]=new JMenuItem("Choose...");
 				for_m[FORMAT_COLOR].add(for_cl[FORMAT_COLOR_CHOOSE]);
-			
-		
+			for_fo=new JMenuItem[FORMAT_FONT_CHOOSE+1];
+				for_fo[FORMAT_FONT_CHOOSE]=new JMenuItem("Choose");
+				for_m[FORMAT_FONT].add(for_fo[FORMAT_FONT_CHOOSE]);
+				for_fo[FORMAT_FONT_CHOOSE].addActionListener(hmm);		
 		for(int i=0;i<me.length;i++)
 		{
 			me[i].addActionListener(hmm);
