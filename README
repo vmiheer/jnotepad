@@ -1,13 +1,13 @@
 The aim of this project is to provide simple cross platform notepad supporting unicode text.
 Just Notepad atleast now. Like in windows (which does nothing except text editing... :))
-You are welcome to add advanced feachers.
+You are welcome to add advanced features.
 
 Working componets
 File
-	New	Open	Save	Close
+	New;Open;Save;Close
 Edit
-	Cut	Copy	Paste	Find(incomplete searches 1st element)
+	Cut;Copy;Paste;Find(incomplete searches 1st element)
 Format
-	Font	Color
+	Font;Color
 
 :-P
