@@ -45,6 +45,11 @@ public class HMyMenu implements ActionListener
 			System.out.println("f_save");
 			save();
 		}
+		else if(e.getSource()==o.f_mi[o.FILE_SAVE_AS])
+		{
+			System.out.println("f_save_as");
+			saveas();
+		}
 		else if(e.getSource()==o.f_mi[o.FILE_EXIT])
 		{
 			System.exit(0);
@@ -92,11 +97,11 @@ public class HMyMenu implements ActionListener
 		if(!Notepad.s && !Notepad.sf)
 		{
 			System.out.println("f_save");
-				if (!Notepad.sf)
-				{
-					if(JFileChooser.APPROVE_OPTION==jf.showSaveDialog(null));
-					//write code to select file
-				}
+			if (!Notepad.sf)
+			{
+				if(JFileChooser.APPROVE_OPTION==jf.showSaveDialog(null));
+				//write code to select file
+			}
 				//save contents to either this file or specified new file
 				//write code to write data to file here...
 				try
@@ -114,6 +119,20 @@ public class HMyMenu implements ActionListener
 		}
 		n.setTitle(jf.getSelectedFile().getName()+"    -    Jnotepad++");
 	}
+	
+	void saveas()
+	{
+
+			System.out.println("f_save_as");
+
+				if(JFileChooser.APPROVE_OPTION==jf.showSaveDialog(null));
+				//write code to select file
+				
+				Notepad.sf=true;
+				Notepad.s=true;
+		n.setTitle(jf.getSelectedFile().getName()+"    -    Jnotepad++");
+	}
+	
 	private void init()
 	{
 
